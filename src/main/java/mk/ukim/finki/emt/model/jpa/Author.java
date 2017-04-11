@@ -17,4 +17,9 @@ public class Author extends BaseEntity {
   @Analyzer(definition = "emtAnalyser")
   @Boost(1f)
   public String nameAndLastName;
+
+  @Override
+  public String toString() {
+    return nameAndLastName;
+  }
 }

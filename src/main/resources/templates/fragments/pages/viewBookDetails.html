@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<div xmlns:th="http://www.thymeleaf.org">
+    <h4 class="page-header" th:text="${bd.book.name}"></h4>
+
+        <div class="col-md-4">
+            <img class="img-responsive thumbnail" th:src="@{/book/{id}/picture(id=${bd.book.id})}" />
+        </div>
+
+        <form th:action="@{/admin/book/{id}(id=${bd.book.id})}" method="post">
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input class="form-control" id="title" name="name" th:value="${bd.book.name}" />
+            </div>
+            <div class="form-group">
+                <label for="desc">Description:</label>
+                <textarea rows="6" class="form-control" id="desc" name="description" th:text="${bd.description}"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="auth">Author:</label>
+                <input class="form-control" id="auth" th:value="${bd.book.authors}" name="authors"/>
+            </div>
+
+            <div class="form-group">
+                <label for="isbn">ISBN:</label>
+                <input type="text" class="form-control" id="isbn" name="isbn" th:value="${bd.book.isbn}"/>
+            </div>
+
+            <div class="form-group">
+                <label for="price">Price:</label>
+                <input type="text" name="price" id="price" class="form-control" th:value="${bd.book.price}"/>
+            </div>
+
+            <button class="btn btn-default" >Save</button>
+        </div>
+    </form>
+</div>
+
+

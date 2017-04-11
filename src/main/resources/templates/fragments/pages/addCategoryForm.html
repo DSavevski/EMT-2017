@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-Create category:
+<h3 class="page-header">Create category:</h3>
 <form th:action="@{/admin/category}"
       method="POST"
       xmlns:th="http://www.thymeleaf.org">
 
-  Name: <input type="text" name="categoryName"> </input>
-  <input type="submit">Submit</input>
+  <div class="form-group">
+    <label for="price">Name:</label>
+    <input type="text" name="categoryName" id="price" class="form-control" />
+  </div>
+
+  <button type="submit" class="btn btn-default">Submit</button>
 </form>

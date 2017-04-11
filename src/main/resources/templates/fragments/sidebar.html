@@ -5,17 +5,15 @@
       <li class="sidebar-search">
         <form method="get" th:action="@{/search}">
           <div class="input-group custom-search-form">
-
             <input type="text"
                    name="query"
                    class="form-control"
-                   placeholder="Search..."></input>
+                   placeholder="Search" />
             <span class="input-group-btn">
               <button class="btn btn-default" type="submit">
                 <i class="fa fa-search"></i>
               </button>
             </span>
-
           </div>
         </form>
         <!-- /input-group -->
@@ -24,7 +22,7 @@
         <a href="/admin/category">Add category</a>
       </li>
       <li>
-        <a href="/admin/book">Add producty</a>
+        <a href="/admin/book">Add product</a>
       </li>
       <li class="split-pane-divider"></li>
       <li th:each="c : ${categories}">

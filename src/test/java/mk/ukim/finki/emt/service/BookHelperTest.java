@@ -2,6 +2,7 @@ package mk.ukim.finki.emt.service;
 
 import mk.ukim.finki.emt.model.exceptions.CategoryInUseException;
 import mk.ukim.finki.emt.model.jpa.Book;
+import mk.ukim.finki.emt.model.jpa.BookDetails;
 import mk.ukim.finki.emt.model.jpa.Category;
 import mk.ukim.finki.emt.persistence.BookRepository;
 import mk.ukim.finki.emt.persistence.CategoryRepository;
@@ -19,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 public class BookHelperTest {
 
   public static final String AUTHOR_NAME = "Riste Stojanov";
@@ -51,12 +52,21 @@ public class BookHelperTest {
     Category c = new Category();
     c.name = "base";
     Category base = categoryRepository.save(c);
-    Book book = serviceHelper.createBook("Java essentials", base.id, new String[]{"Joshua Bloch"}, "123", 100d);
+    Book book = serviceHelper.createBook("Java essentials", base.id, new String[]{"Joshua Bloch"}, "123", 100d,"test");
 
 
 //    List<Book> foundBooks = searchRepository.searchKeyword(Book.class, "java", "name", "category.name");
 
 
+  }
+
+  @Test
+  public void testBookUpdate(){
+    //Book book = bookRepository.findOne(12L);
+    //String [] authors = {"Daniele Suh","Peter Josh"};
+    //Book book = serviceHelper.updateBook(12L,"Your Inner Critic Is a Big Jerk",authors,"123-444-1233-12");
+    //System.out.println(book.name);
+    //System.out.println(book.isbn);
   }
 
 }

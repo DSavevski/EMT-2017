@@ -40,14 +40,17 @@ public interface StoreManagementService {
     Long categoryId,
     String[] authors,
     String isbn,
-    Double price
+    Double price,
+    String description
   );
 
   Book updateBook(
     Long bookId,
     String name,
     String[] authors,
-    String isbn
+    String isbn,
+    String description,
+    Double price
   );
 
   Book updateBookPrice(

@@ -18,5 +18,8 @@ public class BookDetails extends BaseEntity {
   @Embedded
   public FileEmbeddable downloadFile;
 
-
+  @Override
+  public String toString() {
+    return book.name;
+  }
 }

@@ -1,8 +1,10 @@
 package mk.ukim.finki.emt.service.impl;
 
 import mk.ukim.finki.emt.model.jpa.Book;
+import mk.ukim.finki.emt.model.jpa.BookDetails;
 import mk.ukim.finki.emt.model.jpa.BookPicture;
 import mk.ukim.finki.emt.model.jpa.Category;
+import mk.ukim.finki.emt.persistence.BookDetailsRepository;
 import mk.ukim.finki.emt.persistence.BookPictureRepository;
 import mk.ukim.finki.emt.persistence.CategoryRepository;
 import mk.ukim.finki.emt.persistence.QueryRepository;
@@ -26,6 +28,8 @@ public class QueryServiceImpl implements QueryService {
 
   BookPictureRepository bookPictureRepository;
 
+  BookDetailsRepository bookDetailsRepository;
+
   @Autowired
   SearchRepository searchRepository;
 
@@ -33,11 +37,13 @@ public class QueryServiceImpl implements QueryService {
   public QueryServiceImpl(
     QueryRepository bookRepository,
     CategoryRepository categoryRepository,
-    BookPictureRepository bookPictureRepository
+    BookPictureRepository bookPictureRepository,
+    BookDetailsRepository bookDetailsRepository
   ) {
     this.queryRepository = bookRepository;
     this.categoryRepository = categoryRepository;
     this.bookPictureRepository = bookPictureRepository;
+    this.bookDetailsRepository = bookDetailsRepository;
   }
 
   @Override
@@ -59,6 +65,11 @@ public class QueryServiceImpl implements QueryService {
   @Override
   public BookPicture getByBookId(Long bookId) {
     return bookPictureRepository.findByBookId(bookId);
+  }
+
+  @Override
+  public BookDetails getBookDetailsById(Long bookId) {
+    return bookDetailsRepository.findBookDetailsByBook_Id(bookId);
   }
 
   @Override

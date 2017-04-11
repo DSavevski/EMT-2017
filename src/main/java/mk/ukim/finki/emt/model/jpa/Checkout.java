@@ -1,7 +1,4 @@
 package mk.ukim.finki.emt.model.jpa;
-
-
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -10,6 +7,7 @@ import javax.persistence.Table;
 /**
  * @author Riste Stojanov
  */
+
 @Entity
 @Table(name = "checkouts")
 public class Checkout extends BaseEntity {
@@ -22,6 +20,5 @@ public class Checkout extends BaseEntity {
 
   @ManyToOne
   public ContactInfo contactInfo;
-
 
 }

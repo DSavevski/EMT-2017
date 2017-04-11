@@ -1,16 +1,14 @@
 package mk.ukim.finki.emt.service.impl;
 
 import mk.ukim.finki.emt.model.jpa.*;
-import mk.ukim.finki.emt.persistence.AuthorsRepository;
-import mk.ukim.finki.emt.persistence.BookPictureRepository;
-import mk.ukim.finki.emt.persistence.BookRepository;
-import mk.ukim.finki.emt.persistence.CategoryRepository;
+import mk.ukim.finki.emt.persistence.*;
 import mk.ukim.finki.emt.service.BookServiceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.sql.rowset.serial.SerialBlob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,21 +21,24 @@ public class BookHelperImpl implements BookServiceHelper {
    * TODO: move this into book details helper
    */
   @Autowired
-  BookPictureRepository bookPictureRepository;
+  private BookPictureRepository bookPictureRepository;
   private CategoryRepository categoryRepository;
   private BookRepository bookRepository;
   private AuthorsRepository authorsRepository;
+  private BookDetailsRepository bookDetailsRepository;
 
 
   @Autowired
   public BookHelperImpl(
     CategoryRepository categoryRepository,
     BookRepository bookRepository,
-    AuthorsRepository authorsRepository
+    AuthorsRepository authorsRepository,
+    BookDetailsRepository bookDetailsRepository
   ) {
     this.categoryRepository = categoryRepository;
     this.bookRepository = bookRepository;
     this.authorsRepository = authorsRepository;
+    this.bookDetailsRepository = bookDetailsRepository;
   }
 
   @Override
@@ -47,11 +48,11 @@ public class BookHelperImpl implements BookServiceHelper {
 
   @Override
   public BookDetails getBookDetails(Long bookId) {
-    return null;
+    return bookDetailsRepository.findBookDetailsByBook_Id(bookId);
   }
 
   @Override
-  public Book createBook(String name, Long categoryId, String[] authors, String isbn, Double price) {
+  public Book createBook(String name, Long categoryId, String[] authors, String isbn, Double price,String description) {
     Book book = new Book();
     book.name = name;
     book.isbn = isbn;
@@ -61,13 +62,38 @@ public class BookHelperImpl implements BookServiceHelper {
       Author author = getOrCreateAuthor(authorName);
       book.authors.add(author);
     }
-    return bookRepository.save(book);
+    // avoid transient exception
+    Book savedBook = bookRepository.save(book);
+
+    BookDetails bookDetails = new BookDetails();
+    bookDetails.description = description;
+    bookDetails.book = savedBook;
+    //bookDetailsRepository.save(bookDetails);
+    //return bookRepository.save(book);
+      bookDetailsRepository.save(bookDetails);
+    return savedBook;
   }
 
 
   @Override
-  public Book updateBook(Long bookId, String name, String[] authors, String isbn) {
-    return null;
+  public Book updateBook(Long bookId, String name, String[] authors, String isbn,String description, Double price) {
+    Book book = bookRepository.findOne(bookId);
+    book.name = name;
+    book.authors = new ArrayList<>();
+    for (String authorName : authors) {
+      Author author = getOrCreateAuthor(authorName);
+      book.authors.add(author);
+    }
+    book.isbn = isbn;
+    book.price = price;
+    bookRepository.save(book);
+
+    BookDetails bookDetails = bookDetailsRepository.findBookDetailsByBook_Id(bookId);
+    bookDetails.book = book;
+    bookDetails.description = description;
+    bookDetailsRepository.save(bookDetails);
+
+    return book;
   }
 
   @Override

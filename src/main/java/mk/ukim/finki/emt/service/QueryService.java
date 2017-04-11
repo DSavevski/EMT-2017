@@ -1,6 +1,7 @@
 package mk.ukim.finki.emt.service;
 
 import mk.ukim.finki.emt.model.jpa.Book;
+import mk.ukim.finki.emt.model.jpa.BookDetails;
 import mk.ukim.finki.emt.model.jpa.BookPicture;
 import mk.ukim.finki.emt.model.jpa.Category;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ public interface QueryService {
   List<Category> findTopLevelCategories();
 
   BookPicture getByBookId(Long bookId);
+
+  BookDetails getBookDetailsById(Long bookId);
 
   List<Book> searchBook(String query);
 }

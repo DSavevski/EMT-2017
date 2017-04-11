@@ -2,20 +2,36 @@
 <div xmlns:th="http://www.thymeleaf.org">
   <h4 th:if="${exception!=null}" class="panel panel-danger" th:text="${exception}"></h4>
 
-  <h1>Products:</h1>
+  <h3 class="page-header">Products:</h3>
 
-  <div th:each="prod : ${products}" class="row">
-    <div class="col-md-4">
-      <img class="img-responsive" th:src="@{/book/{id}/picture(id=${prod.id})}"></img>
+  <div th:each="prod : ${products}" class="panel-group">
+    <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4>Title: <a th:href="@{/book/{id}(id=${prod.id})}" class="text-input" th:text="${prod.name}"></a></h4>
+      </div>
+      <div class="panel-body">
+        <div class="col-md-4">
+          <img class="img-responsive thumbnail" style="height: 200px;" th:src="@{/book/{id}/picture(id=${prod.id})}" />
+        </div>
+        <div class="col-md-8">
+          <label for="isbn">ISBN:</label>
+          <h5 th:text="${prod.isbn}" id="isbn" style="margin-top: 0px;"></h5>
+          <br />
+          <label for="cat">Category:</label>
+          <h5 id="cat" style="margin-top: 0px;">
+            <a th:href="@{/category/{categoryId}(categoryId=${prod.category.id})}"
+               th:text="${prod.category.name}">
+            </a>
+          </h5>
+          <br />
+          <a class="btn btn-info btn-sm" role="button" th:href="@{/book/{id}(id=${prod.id})}">Read more>></a>
+        </div>
+      </div>
+     <!-- <div class="panel-footer">
+        <a th:href="@{/book/{id}(id=${prod.id})}" th:text="${prod.name}"></a>
+      </div>-->
     </div>
-    <div class="col-md-8">
-      <div th:text="${prod.name}"></div>
-      <div th:text="${prod.isbn}"></div>
-      <a th:href="@{/category/{categoryId}(categoryId=${prod.category.id})}"
-         th:text="${prod.category.name}">
-      </a>
     </div>
-    <hr/>
   </div>
-  <hr/>
 </div>

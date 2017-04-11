@@ -12,6 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BookPictureRepository extends CrudRepository<BookPicture, Long> {
-
   BookPicture findByBookId(Long id);
 }

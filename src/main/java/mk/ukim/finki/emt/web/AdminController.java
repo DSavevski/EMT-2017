@@ -1,7 +1,9 @@
 package mk.ukim.finki.emt.web;
 
 import mk.ukim.finki.emt.model.jpa.Book;
+import mk.ukim.finki.emt.model.jpa.BookDetails;
 import mk.ukim.finki.emt.model.jpa.Category;
+import mk.ukim.finki.emt.service.QueryService;
 import mk.ukim.finki.emt.service.StoreManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,10 +27,12 @@ import java.util.List;
 public class AdminController {
 
   StoreManagementService storeManagementService;
+  QueryService queryService;
 
   @Autowired
-  public AdminController(StoreManagementService storeManagementService) {
+  public AdminController(StoreManagementService storeManagementService, QueryService queryService) {
     this.storeManagementService = storeManagementService;
+    this.queryService = queryService;
   }
 
   @RequestMapping(value = {"/admin/category"}, method = RequestMethod.GET)
@@ -69,12 +73,30 @@ public class AdminController {
       categoryId,
       authors.split(";"),
       isbn,
-      price
+      price,
+      description
     );
     storeManagementService.addBookPicture(product.id, picture.getBytes(), picture.getContentType());
 
     model.addAttribute("product", product);
     return "index";
+  }
+
+
+  @RequestMapping(value = {"/admin/book/{id}"}, method = RequestMethod.POST)
+  public String updateProduct(@PathVariable Long id, Model model, @RequestParam String name,
+                              @RequestParam String isbn, @RequestParam String[] authors,
+                              @RequestParam String description, @RequestParam Double price){
+
+    storeManagementService.updateBook(id,name,authors,isbn,description,price);
+
+    BookDetails bookDetails = queryService.getBookDetailsById(id);
+
+    model.addAttribute("bd", bookDetails);
+    model.addAttribute("pageFragment","bookDetails");
+
+    return "index";
+
   }
 
 

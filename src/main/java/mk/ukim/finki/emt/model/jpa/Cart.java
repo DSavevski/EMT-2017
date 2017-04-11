@@ -19,6 +19,4 @@ public class Cart extends BaseEntity {
 
   public Double totalPrice;
 
-
-
 }

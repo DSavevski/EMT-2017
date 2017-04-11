@@ -1,6 +1,7 @@
 package mk.ukim.finki.emt.web;
 
 import mk.ukim.finki.emt.model.jpa.Book;
+import mk.ukim.finki.emt.model.jpa.BookDetails;
 import mk.ukim.finki.emt.model.jpa.BookPicture;
 import mk.ukim.finki.emt.service.QueryService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
@@ -32,7 +33,8 @@ public class BasicController {
 
   @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
   public String index(Model model) {
-    model.addAttribute("products", queryService.getPromotedBooks(1, 20));
+    model.addAttribute("products", queryService.getBooksInCategory(1L,1, 2));
+
 
     return "index";
   }
@@ -61,6 +63,13 @@ public class BasicController {
 
     model.addAttribute("products", page);
 
+    return "index";
+  }
+  @RequestMapping(value = {"/book/{id}"}, method = RequestMethod.GET)
+  public String bookDetails(@PathVariable Long id, Model model){
+    BookDetails bookDetails = queryService.getBookDetailsById(id);
+    model.addAttribute("bd", bookDetails);
+    model.addAttribute("pageFragment","bookDetails");
     return "index";
   }
 

@@ -51,13 +51,13 @@ public class StoreManagementServiceImpl implements StoreManagementService {
   }
 
   @Override
-  public Book createBook(String name, Long categoryId, String[] authors, String isbn, Double price) {
-    return bookServiceHelper.createBook(name, categoryId, authors, isbn, price);
+  public Book createBook(String name, Long categoryId, String[] authors, String isbn, Double price,String description) {
+    return bookServiceHelper.createBook(name, categoryId, authors, isbn, price,description);
   }
 
   @Override
-  public Book updateBook(Long bookId, String name, String[] authors, String isbn) {
-    return bookServiceHelper.updateBook(bookId, name, authors, isbn);
+  public Book updateBook(Long bookId, String name, String[] authors, String isbn, String description, Double price) {
+    return bookServiceHelper.updateBook(bookId, name, authors, isbn,description,price);
   }
 
   @Override
