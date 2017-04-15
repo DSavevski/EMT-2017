@@ -8,6 +8,7 @@ import mk.ukim.finki.emt.persistence.BookRepository;
 import mk.ukim.finki.emt.persistence.CategoryRepository;
 import mk.ukim.finki.emt.persistence.impl.SearchRepository;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,9 @@ public class BookHelperTest {
   @Autowired
   CategoryRepository categoryRepository;
 
+  @Autowired
+  BookServiceHelper bookServiceHelper;
+
 
   private Book book;
   private Category child;
@@ -61,12 +65,28 @@ public class BookHelperTest {
   }
 
   @Test
-  public void testBookUpdate(){
-    //Book book = bookRepository.findOne(12L);
-    //String [] authors = {"Daniele Suh","Peter Josh"};
-    //Book book = serviceHelper.updateBook(12L,"Your Inner Critic Is a Big Jerk",authors,"123-444-1233-12");
-    //System.out.println(book.name);
-    //System.out.println(book.isbn);
+  public void testCreateBookDetails(){
+    String [] authors = {"John","John2"};
+
+    Book bookDetails = bookServiceHelper.createBook("Test1",1L,authors,"test-isbn",59D,"TESt desc");
+    Assert.assertNotNull(bookDetails);
+    Assert.assertEquals(bookDetails.name,"Test1");
+    Assert.assertEquals(bookDetails.isbn,"test-isbn");
+  }
+
+  @Test
+  public void testGetBookDetails(){
+    BookDetails book = bookServiceHelper.getBookDetails(8L);
+    Assert.assertNotNull(book);
+  }
+
+  @Test
+  public void testUpdateBookDetails(){
+    BookDetails bookDetails = bookServiceHelper.getBookDetails(8L);
+    String [] authors = {"John","John2"};
+    bookServiceHelper.updateBook(bookDetails.book.id,
+            "update",authors,"update","update",50D);
+    Assert.assertEquals(bookDetails.book.name,"update");
   }
 
 }

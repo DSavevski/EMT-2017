@@ -33,10 +33,14 @@ public class BasicController {
 
   @RequestMapping(value = {"/index", "/"}, method = RequestMethod.GET)
   public String index(Model model) {
-    model.addAttribute("products", queryService.getBooksInCategory(1L,1, 2));
+
+    System.out.println("TEST");
+    Page<Book> page = queryService.getBooksInCategory(1L,1,2);
+    System.out.println("==================" + page);
+    model.addAttribute("products", queryService.getBooksInCategory(1L,0, 20));
 
 
-    return "index";
+    return "index2";
   }
 
   @RequestMapping(value = {"/category/{categoryId}"}, method = RequestMethod.GET)
